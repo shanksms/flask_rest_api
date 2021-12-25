@@ -7,6 +7,10 @@
 
 ### Thinking end points as resources
 Lets say there is a chair resource on a server.
-|Name|Email|Address|
-|----|-----|-------|
-|John|john@example.com|Address1|
+|HTTP Method|Resource|
+|----|-----|
+|GET|/items/chair|
+|POST|/items/chair|
+|PUT|/items/chair|
+|DELETE|/items/chair|
+as you can see for all the http verbs, same url is sufficient.
