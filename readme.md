@@ -2,6 +2,7 @@
 
 ## resources
 [O'Reilly course] (https://learning.oreilly.com/videos/rest-apis-with/9781788621526/9781788621526-video3_4/)
+[Deploy Flask to prod] (https://vsupalov.com/flask-web-server-in-production/)
 
 ## Rest Principles
 
@@ -16,3 +17,6 @@ Lets say there is a chair resource on a server.
 
 <br>
 as you can see for all the http verbs, same url is sufficient.
+
+
+### json always used " while python dictionaries can use ' also
