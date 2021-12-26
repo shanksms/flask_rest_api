@@ -13,4 +13,6 @@ Lets say there is a chair resource on a server.
 |POST|/items/chair|
 |PUT|/items/chair|
 |DELETE|/items/chair|
+
+<br>
 as you can see for all the http verbs, same url is sufficient.
