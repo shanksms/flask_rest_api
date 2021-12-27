@@ -11,8 +11,8 @@ Lets say there is a chair resource on a server.
 |HTTP Method|Resource|
 |----|-----|
 |GET|/items/chair|
-|POST|/items/chair|
-|PUT|/items/chair|
+|POST|/items|
+|PUT|/items|
 |DELETE|/items/chair|
 
 <br>
@@ -20,6 +20,12 @@ as you can see for all the http verbs, same url is sufficient.
 
 ### Test-First API design
 in this we start with designing the API end points. If possible use a tool like Postman to save the end points.
+
+### important http status codes
+1. 200 for success
+2. 201 for resource created. Generally this code is returned from post request
+3. 404 for resource not found. 
+4. 400 for bad request
 
 ## Rest Principles - ends
  
