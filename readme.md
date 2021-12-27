@@ -4,6 +4,7 @@
 [O'Reilly course] (https://learning.oreilly.com/videos/rest-apis-with/9781788621526/9781788621526-video3_4/)
 [Deploy Flask to prod] (https://vsupalov.com/flask-web-server-in-production/)
 [Flask rest end points design] (https://stackoverflow.com/questions/20715238/flask-restful-api-multiple-and-complex-endpoints)
+[Rest design principles] (https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design)
 
 ## Authentication
 ### JWT
