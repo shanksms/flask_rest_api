@@ -37,6 +37,9 @@ jwt = JWT(app, authenticate, identity)
 As a result of above code, flask rest app will expose an end point /auth, which will first call authenticate method and
 if authentication is successful, it will return jwt token
 
+for testing from post man, you can make a post request with below header while requesting a protected resource:
+Authorization: JWT <JWT_VALUE_HERE>
+
 ## Authentication - ends
 
 ## Rest Principles
