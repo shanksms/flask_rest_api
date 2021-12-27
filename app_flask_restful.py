@@ -42,6 +42,16 @@ class Item(Resource):
         items = [item for item in items if item['name'] != name]
         return {'message': 'item deleted'}
 
+    def put(self, name):
+        data = request.get_json()
+        filtered_items = [item for item in items if item['name'] == name]
+        if len(filtered_items) == 0:
+            item = {'name': name, 'price': data['price']}
+            items.append(item)
+        else:
+            item = filtered_items[0]
+            item.update(data)
+        return item
 
 class ItemList(Resource):
     def get(self):
