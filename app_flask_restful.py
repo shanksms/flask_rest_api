@@ -30,7 +30,7 @@ class Item(Resource):
 
     def post(self, name):
         request_data = request.get_json()
-        existing_items = [item for item in items if name == request_data['name']]
+        existing_items = [item for item in items if name == item['name']]
         if len(existing_items) != 0:
             return {'message': 'item already exists'}, 400
         item = {'name': name, 'price': request_data['price']}
