@@ -16,7 +16,7 @@ class User:
         '''
         result = cursor.execute(query, (username, ))
         row = result.fetchone()
-        return cls(*row)
+        return cls(*row) if row else None
 
 
     @classmethod
