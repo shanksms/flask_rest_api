@@ -35,26 +35,61 @@ class Item(Resource):
 
         request_data = request.get_json()
         price = float(request_data['price'])
+        if self.insert(name, price):
+           return {'name': name, 'price': price}, 201
+        else:
+            return {'message': 'error occurred while creating record'}, 500
+
+    @classmethod
+    def insert(cls, name, price):
+        status = 0
         try:
             connection = sqlite3.connect('data.db')
             cursor = connection.cursor()
             insert_sql = '''
-            insert into item
-            (name, price)
-            values
-            (?, ?)
-            '''
+                   insert into item
+                   (name, price)
+                   values
+                   (?, ?)
+                   '''
             result = cursor.execute(insert_sql, (name, price))
+            print(result)
+            connection.commit()
+        except Exception as exc:
+            print('exception occurred', exc)
+            status = -1
+        finally:
+            connection.close()
+        return status
+
+    @classmethod
+    def update(cls, name, price):
+        status = 0
+        try:
+            connection = sqlite3.connect('data.db')
+            cursor = connection.cursor()
+            update_sql = 'update item set price=? where name=?'
+            result = cursor.execute(update_sql, (price, name))
+            connection.commit()
+            print(f'{result.rowcount} rows updated')
+        except Exception as exc:
+            print('exception occurred', exc)
+            status = -1
+        finally:
+            connection.close()
+        return status
+
+    def delete(self, name):
+        try:
+            connection = sqlite3.connect('data.db')
+            cursor = connection.cursor()
+            delete_sql ='delete from item where name=?'
+            result = cursor.execute(delete_sql, (name, ))
             print(result)
             connection.commit()
         finally:
             connection.close()
 
-        return {'name': name, 'price': price}, 201
-
-    def delete(self, name):
-        global items
-        items = [item for item in items if item['name'] != name]
         return {'message': 'item deleted'}
 
     def put(self, name):
@@ -67,14 +102,12 @@ class Item(Resource):
         )
         # data = request.get_json()
         data = request_parser.parse_args()
-        filtered_items = [item for item in items if item['name'] == name]
-        if len(filtered_items) == 0:
-            item = {'name': name, 'price': data['price']}
-            items.append(item)
+        item = self.get_item_by_name(name)
+        if item:
+            self.update(name, data['price'])
         else:
-            item = filtered_items[0]
-            item.update(data)
-        return item
+            self.insert(name, data['price'])
+        return {'name': name, 'price': data['price']}
 
 
 class ItemList(Resource):
