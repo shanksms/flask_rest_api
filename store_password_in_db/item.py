@@ -9,7 +9,7 @@ class Item(Resource):
     def get(self, name):
 
         item = self.get_item_by_name(name)
-        if item == 0:
+        if not item:
             return {'message': 'item not found'}, 404
         return item, 200
 
