@@ -71,6 +71,14 @@ in this we start with designing the API end points. If possible use a tool like 
  
 ### what is werkzeug 
 https://stackoverflow.com/questions/37004983/what-exactly-is-werkzeug
+https://testdriven.io/blog/what-is-werkzeug/
+<br>
+Werkzeug is a collection of libraries that can be used to create a WSGI (Web Server Gateway Interface) compatible
+web application in Python.
+A WSGI (Web Server Gateway Interface) server is necessary for Python web applications since a web server cannot 
+communicate directly with Python. WSGI is an interface between a web server and a Python-based web application.
+Put another way, Werkzeug provides a set of utilities for creating a Python application that can talk to a WSGI server, 
+like Gunicorn.
 
 ### what is Gunicorn
 Gunicorn is a Python WSGI HTTP server that many developers use to deploy their Python applications. 
