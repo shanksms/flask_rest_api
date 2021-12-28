@@ -1,4 +1,4 @@
-from use_sql_alchemy.models.user import UserModel
+from using_sql_alchemy.models.user import UserModel
 
 
 def authenticate(username, password):
