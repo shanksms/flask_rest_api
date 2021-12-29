@@ -1,24 +1,21 @@
 from using_sql_alchemy.db import db
 
 
-class ItemModel(db.Model):
-    __tablename__ = 'item'
+class StoreModel(db.Model):
+    __tablename__ = 'store'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
-    price = db.Column(db.Float(precision=2))
-    store_id = db.Column(db.Integer, db.ForeignKey('store.id'))
-    store = db.relationship('StoreModel')
+    items = db.relationship('ItemModel', lazy='dynamic')
 
-    def __init__(self, name, price, store_id):
+
+    def __init__(self, name):
         self.name = name
-        self.price = price
-        self.store_id = store_id
 
     def json(self):
-        return {'name': self.name, 'price': self.price}
+        return {'name': self.name, 'items': [item.json() for item in self.items.all()]}
 
     @classmethod
-    def get_item_by_name(cls, name):
+    def find_by_name(cls, name):
         return cls.query.filter_by(name=name).first()
 
     def save_to_db(self):

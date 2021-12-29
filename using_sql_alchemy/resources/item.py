@@ -6,6 +6,20 @@ from using_sql_alchemy.models.item import ItemModel
 
 
 class Item(Resource):
+    request_parser = reqparse.RequestParser()
+    request_parser.add_argument(
+        'price',
+        type=float,
+        required=True,
+        help='This field can not be left blank'
+    )
+    request_parser.add_argument(
+        'store_id',
+        type=int,
+        required=True,
+        help='This field can not be left blank'
+    )
+
     @jwt_required()
     def get(self, name):
 
@@ -20,7 +34,7 @@ class Item(Resource):
 
         request_data = request.get_json()
         price = float(request_data['price'])
-        item = ItemModel(name=name, price=price)
+        item = ItemModel(name=name, price=price, store_id=request_data['store_id'])
         try:
             item.save_to_db()
         except:
@@ -35,19 +49,13 @@ class Item(Resource):
         return {'message': 'item deleted'}
 
     def put(self, name):
-        request_parser = reqparse.RequestParser()
-        request_parser.add_argument(
-            'price',
-            type=float,
-            required=True,
-            help='This field can not be left blank'
-        )
+
         # data = request.get_json()
-        data = request_parser.parse_args()
+        data = Item.request_parser.parse_args()
         price = float(data['price'])
         item = ItemModel.get_item_by_name(name)
         if item is None:
-            item = ItemModel(name=name, price=price)
+            item = ItemModel(name=name, price=price, store_id=data['store_id'])
         else:
             item.price = price
         item.save_to_db()
@@ -57,16 +65,4 @@ class Item(Resource):
 class ItemList(Resource):
 
     def get(self):
-        connection = sqlite3.connect('data.db')
-        cursor = connection.cursor()
-        sql = '''
-        select name, price from item
-        '''
-        result = cursor.execute(sql)
-        rows = result.fetchall()
-        items = []
-        for row in rows:
-            items.append({'name': row[0], 'price': row[1]})
-        connection.commit()
-        connection.close()
-        return {'items': items}, 200
+        return {'items': [item_model.json() for item_model in ItemModel.query.all()]}, 200
