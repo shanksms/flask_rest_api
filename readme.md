@@ -113,3 +113,35 @@ from flask import Response
 def rest_end_point_method():
     return Response("{'a':'b'}", status=201, mimetype='application/json')
 ```
+
+### Deploy Flask app to Heroku
+1. Create runtime.txt. This will contain what python version should be used to run the Flask app\
+     python-3.9.4
+2. Create requirements.txt. this essentially tells python what are the dependencies
+    Flask
+    <br>
+    Flask-RESTful
+    <br>
+    Flask-JWT
+    <br>
+    Flask-SQLAlchemy
+    <br>
+    uwsgi
+    <br>
+3. Create uwsgi.ini file. This file is used by uwsgi server to read configurations.
+```shell script
+[uwsgi]
+http-socket = :$(PORT)
+master = true
+die-on-term = true
+module = app:app
+memory-report = true
+```
+4. Create Procfile. This tells heroku which command to run
+```shell script
+web: uwsgi uwsgi.ini
+```
+
+
+
+### Deploy Flask app to Heroku - ends
